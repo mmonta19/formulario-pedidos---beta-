@@ -7,19 +7,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f4f7f6; color: #1e293b; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
         .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
         .hidden { display: none; }
         
-        /* DISEÑO ORIGINAL DE BOTONES GRANDES */
+        /* BOTONES GRANDES BLANCOS ORIGINALES */
         .btn-system { 
-            @apply w-full py-12 px-6 rounded-[40px] bg-white border border-slate-200 shadow-sm 
-            flex flex-col items-center justify-center gap-2 transition-all active:scale-[0.98];
+            @apply w-full py-12 px-8 rounded-[45px] bg-white border-2 border-slate-100 shadow-xl 
+            flex flex-col items-center justify-center gap-2 transition-all active:scale-[0.97] hover:border-blue-500;
         }
-        .btn-system .title { @apply font-black text-slate-900 text-lg uppercase tracking-tight; }
-        .btn-system .subtitle { @apply font-normal text-slate-500 text-sm uppercase; }
+        .btn-system .title { @apply font-black text-slate-900 text-xl uppercase tracking-tighter; }
+        .btn-system .subtitle { @apply font-normal text-slate-500 text-sm uppercase tracking-widest; }
 
-        .input-premium { @apply w-full p-5 bg-white border-2 border-slate-100 rounded-3xl outline-none focus:border-blue-500 font-bold text-slate-700 transition-all uppercase; }
+        .input-premium { @apply w-full p-6 bg-slate-50 border-2 border-transparent rounded-[25px] outline-none focus:border-blue-500 focus:bg-white font-bold text-slate-700 transition-all uppercase; }
         
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
         .accordion-open .accordion-content { max-height: 10000px; }
@@ -30,59 +30,63 @@
 <body class="min-h-screen pb-20">
 
     <div class="max-w-xl mx-auto flex flex-col min-h-screen">
-        <header class="p-10 pt-16 text-center">
-            <h1 class="text-4xl font-black italic tracking-tighter text-slate-900">BIO-FIX<span class="text-blue-600">®</span></h1>
-            <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 mt-2">Professional Implant Systems</p>
+        <header class="bg-slate-900 text-white p-12 pt-16 rounded-b-[60px] shadow-2xl text-center">
+            <h1 class="text-4xl font-black italic tracking-tighter">BIO-FIX<span class="text-blue-500">®</span></h1>
+            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-[0.5em] mt-4">Professional Implant Systems</p>
         </header>
 
-        <nav class="glass sticky top-4 mx-6 p-4 rounded-[30px] shadow-lg z-50 flex justify-between items-center border border-white">
+        <nav class="glass sticky top-4 mx-6 mt-[-30px] p-5 rounded-[30px] shadow-2xl z-50 flex justify-between items-center border border-white/50">
             <button id="btn-volver" onclick="goBack()" class="w-12 h-12 flex items-center justify-center bg-slate-100 rounded-2xl font-black hidden">←</button>
-            <div class="flex flex-col ml-3">
-                <span id="nav-subtitle" class="text-xs font-black text-slate-900 uppercase">Menú Principal</span>
+            <div class="flex flex-col ml-2">
+                <span id="nav-subtitle" class="text-sm font-black text-slate-900 uppercase italic">Catálogo Oficial</span>
             </div>
-            <button onclick="goToResumen()" class="bg-slate-900 text-white px-6 py-3 rounded-2xl font-black text-[11px] uppercase tracking-wider">
+            <button onclick="goToResumen()" class="bg-blue-600 text-white px-6 py-3 rounded-2xl font-black text-[10px] uppercase shadow-lg">
                 Pedido (<span id="cart-count">0</span>)
             </button>
         </nav>
 
-        <main class="p-6 space-y-6">
-            <section id="step-choice" class="space-y-4 pt-10">
+        <main class="p-6 mt-8 space-y-6">
+            <section id="step-choice" class="space-y-5">
                 <button onclick="showSection('step-login-old')" class="btn-system">
                     <span class="title">Cliente Registrado</span>
                 </button>
-                <button onclick="showSection('step-login-new')" class="btn-system !bg-blue-600">
+                <button onclick="showSection('step-login-new')" class="btn-system !bg-slate-900">
                     <span class="title !text-white">Registro Nuevo</span>
                 </button>
             </section>
 
-            <section id="step-menu" class="hidden space-y-4">
+            <section id="step-login-old" class="hidden space-y-6">
+                <div class="bg-white p-8 rounded-[40px] shadow-lg border border-slate-100">
+                    <input type="text" id="old_nom" placeholder="Nombre y Apellido" class="input-premium mb-4">
+                    <input type="text" id="old_dni" placeholder="DNI" class="input-premium">
+                </div>
+                <button onclick="validateStart('old')" class="w-full bg-blue-600 text-white py-7 rounded-[30px] font-black uppercase shadow-xl">Entrar al Sistema</button>
+            </section>
+
+            <section id="step-login-new" class="hidden space-y-6">
+                <div class="bg-white p-8 rounded-[40px] shadow-lg border border-slate-100 space-y-4">
+                    <input type="text" id="new_nom" placeholder="Nombre y Apellido *" class="input-premium">
+                    <input type="text" id="new_dni" placeholder="DNI *" class="input-premium">
+                    <input type="text" id="new_mat" placeholder="Matrícula" class="input-premium">
+                    <input type="text" id="new_loc" placeholder="Localidad" class="input-premium">
+                </div>
+                <button onclick="validateStart('new')" class="w-full bg-blue-600 text-white py-7 rounded-[30px] font-black uppercase shadow-xl">Registrar y Continuar</button>
+            </section>
+
+            <section id="step-menu" class="hidden space-y-5">
                 <button onclick="openSub('sub-implantes')" class="btn-system"><span class="title">Implantes</span></button>
                 <button onclick="openSub('sub-analogicos')" class="btn-system"><span class="title">Componentes Analógicos</span></button>
-                <button onclick="openSub('sub-digital')" class="btn-system"><span class="title">Flujo Digital</span></button>
+                <button onclick="openSub('sub-digital')" class="btn-system !border-purple-200"><span class="title text-purple-700">Flujo Digital</span></button>
             </section>
 
             <section id="sub-implantes" class="hidden space-y-4">
-                <button onclick="loadProducts('implantes', 'monopieza')" class="btn-system">
-                    <span class="title">Sistema Monopieza</span><span class="subtitle">MP</span>
-                </button>
-                <button onclick="loadProducts('implantes', 'basales')" class="btn-system">
-                    <span class="title">Sistema Basales</span><span class="subtitle">IB / IBT</span>
-                </button>
-                <button onclick="loadProducts('implantes', 'compresivos')" class="btn-system">
-                    <span class="title">Sistema Compresivos</span><span class="subtitle">CMU</span>
-                </button>
-                <button onclick="loadProducts('implantes', 'hi')" class="btn-system">
-                    <span class="title">Sistema Hexágono Interno</span><span class="subtitle">HI</span>
-                </button>
-                <button onclick="loadProducts('implantes', 'he')" class="btn-system">
-                    <span class="title">Sistema Hexágono Externo</span><span class="subtitle">HE</span>
-                </button>
-                <button onclick="loadProducts('implantes', 'cmhi')" class="btn-system">
-                    <span class="title">Sistema Cono Morse</span><span class="subtitle">CM</span>
-                </button>
-                <button onclick="loadProducts('implantes', 'mu')" class="btn-system">
-                    <span class="title">Sistema Multiunit</span><span class="subtitle">MU</span>
-                </button>
+                <button onclick="loadProducts('implantes', 'monopieza')" class="btn-system"><span class="title">Sistema Monopieza</span><span class="subtitle">MP</span></button>
+                <button onclick="loadProducts('implantes', 'basales')" class="btn-system"><span class="title">Sistema Basales</span><span class="subtitle">IB / IBT</span></button>
+                <button onclick="loadProducts('implantes', 'compresivos')" class="btn-system"><span class="title">Sistema Compresivos</span><span class="subtitle">CMU / C3</span></button>
+                <button onclick="loadProducts('implantes', 'hi')" class="btn-system"><span class="title">Sistema Hexágono Interno</span><span class="subtitle">HI</span></button>
+                <button onclick="loadProducts('implantes', 'he')" class="btn-system"><span class="title">Sistema Hexágono Externo</span><span class="subtitle">HE</span></button>
+                <button onclick="loadProducts('implantes', 'cmhi')" class="btn-system"><span class="title">Sistema Cono Morse</span><span class="subtitle">CM</span></button>
+                <button onclick="loadProducts('implantes', 'mu')" class="btn-system"><span class="title text-amber-600">Sistema Multiunit</span><span class="subtitle">MU</span></button>
             </section>
 
             <section id="sub-analogicos" class="hidden space-y-4">
@@ -91,7 +95,7 @@
                 <button onclick="loadProducts('analogicos', 'hi')" class="btn-system"><span class="title">Hexágono Interno</span><span class="subtitle">HI</span></button>
                 <button onclick="loadProducts('analogicos', 'he')" class="btn-system"><span class="title">Hexágono Externo</span><span class="subtitle">HE</span></button>
                 <button onclick="loadProducts('analogicos', 'cm')" class="btn-system"><span class="title">Cono Morse</span><span class="subtitle">CM</span></button>
-                <button onclick="loadProducts('analogicos', 'mu_pro')" class="btn-system"><span class="title">Sistema Multiunit</span><span class="subtitle">MU</span></button>
+                <button onclick="loadProducts('analogicos', 'mu_pro')" class="btn-system"><span class="title text-amber-600">Sistema Multiunit</span><span class="subtitle">MU</span></button>
             </section>
 
             <section id="sub-digital" class="hidden space-y-4">
@@ -102,57 +106,53 @@
             </section>
 
             <section id="step-lista" class="hidden space-y-4"></section>
-            
-            <section id="step-login-old" class="hidden space-y-6">
-                <input type="text" id="old_nom" placeholder="Nombre y Apellido" class="input-premium">
-                <button onclick="validateStart('old')" class="w-full bg-slate-900 text-white py-6 rounded-3xl font-black uppercase">Ingresar</button>
-            </section>
-
-            <section id="step-login-new" class="hidden space-y-6">
-                <div class="space-y-3">
-                    <input type="text" id="new_nom" placeholder="Nombre y Apellido *" class="input-premium">
-                    <input type="text" id="new_dni" placeholder="DNI" class="input-premium">
-                </div>
-                <button onclick="validateStart('new')" class="w-full bg-blue-600 text-white py-6 rounded-3xl font-black uppercase">Registrar</button>
-            </section>
-
             <section id="step-resumen" class="hidden space-y-5"></section>
         </main>
     </div>
 
     <script>
-        // ... (La base de datos DB se mantiene idéntica con todas las medidas)
+        // BASE DE DATOS RESTAURADA COMPLETAMENTE
         const DB = {
             implantes: {
-                monopieza: { "MP Ø3.0": ["MP Ø3.0x6mm","MP Ø3.0x8mm","MP Ø3.0x10mm","MP Ø3.0x11.5mm","MP Ø3.0x13mm","MP Ø3.0x15mm","MP Ø3.0x18mm","MP Ø3.0x20mm"],"MP Ø3.5": ["MP Ø3.5x6mm","MP Ø3.5x8mm","MP Ø3.5x10mm","MP Ø3.5x11.5mm","MP Ø3.5x13mm","MP Ø3.5x15mm","MP Ø3.5x18mm","MP Ø3.5x20mm"],"MP Ø4.0": ["MP Ø4.0x6mm","MP Ø4.0x8mm","MP Ø4.0x10mm","MP Ø4.0x11.5mm","MP Ø4.0x13mm","MP Ø4.0x15mm","MP Ø4.0x18mm","MP Ø4.0x20mm"],"MP Ø4.5": ["MP Ø4.5x6mm","MP Ø4.5x8mm","MP Ø4.5x10mm","MP Ø4.5x11.5mm","MP Ø4.5x13mm","MP Ø4.5x15mm","MP Ø4.5x18mm","MP Ø4.5x20mm"],"MP Ø5.0": ["MP Ø5.0x6mm","MP Ø5.0x8mm","MP Ø5.0x10mm","MP Ø5.0x11.5mm","MP Ø5.0x13mm"],"MP Ø5.5": ["MP Ø5.5x6mm","MP Ø5.5x8mm","MP Ø5.5x10mm","MP Ø5.5x11.5mm","MP Ø5.5x13mm"]},
-                basales: { "IB - PULIDO": ["IB Ø3.5x10mm","IB Ø3.5x12mm","IB Ø3.5x14mm","IB Ø3.5x15mm","IB Ø3.5x18mm","IB Ø3.5x21mm","IB Ø3.5x23mm","IB Ø3.5x26mm","IB Ø3.5x28mm","IB Ø3.5x24 C14","IB Ø3.5x26 C16","IB Ø3.5x28 C18","IB Ø4.5x10mm","IB Ø4.5x12mm","IB Ø4.5x15mm","IB Ø4.5x18mm","IB Ø4.5x21mm","IB Ø4.5x23mm","IB Ø4.5x26mm","IB Ø4.5x28mm","IB Ø4.5x24 C14","IB Ø4.5x26 C16","IB Ø4.5x28 C18","IB Ø5.5x9mm","IB Ø5.5x10mm","IB Ø5.5x12mm","IB Ø5.5x15mm","IB Ø5.5x18mm","IB Ø6.5x9mm","IB Ø6.5x10mm","IB Ø6.5x12mm","IB Ø6.5x15mm","IB Ø8.5x9mm","IB Ø8.5x10mm","IB Ø8.5x12mm","IB Ø8.5x15mm"],"IBT - TRATAMIENTO": ["IBT Ø3.5x10mm","IBT Ø3.5x12mm","IBT Ø3.5x14mm","IBT Ø3.5x15mm","IBT Ø3.5x18mm","IBT Ø3.5x21mm","IBT Ø3.5x23mm","IBT Ø3.5x26mm","IBT Ø3.5x28mm","IBT Ø3.5x24 C14","IBT Ø3.5x26 C16","IBT Ø3.5x28 C18","IBT Ø4.5x10mm","IBT Ø4.5x12mm","IBT Ø4.5x15mm","IBT Ø4.5x18mm","IBT Ø4.5x21mm","IBT Ø4.5x23mm","IBT Ø4.5x26mm","IBT Ø4.5x28mm","IBT Ø4.5x24 C14","IBT Ø4.5x26 C16","IBT Ø4.5x28 C18","IBT Ø5.5x9mm","IBT Ø5.5x10mm","IBT Ø5.5x12mm","IBT Ø5.5x15mm","IBT Ø5.5x18mm","IBT Ø6.5x9mm","IBT Ø6.5x10mm","IBT Ø6.5x12mm","IBT Ø6.5x15mm","IBT Ø8.5x9mm","IBT Ø8.5x10mm","IBT Ø8.5x12mm","IBT Ø8.5x15mm"]},
-                compresivos: { "SISTEMA CMU (ESTÁNDAR)": ["CMU Ø3.0x6mm","CMU Ø3.0x8mm","CMU Ø3.0x10mm","CMU Ø3.0x11.5mm","CMU Ø3.0x13mm","CMU Ø3.0x15mm","CMU Ø3.0x18mm","CMU Ø3.0x20mm","CMU Ø3.5x6mm","CMU Ø3.5x8mm","CMU Ø3.5x10mm","CMU Ø3.5x11.5mm","CMU Ø3.5x13mm","CMU Ø3.5x15mm","CMU Ø3.5x18mm","CMU Ø3.5x20mm","CMU Ø4.0x6mm","CMU Ø4.0x8mm","CMU Ø4.0x10mm","CMU Ø4.0x11.5mm","CMU Ø4.0x13mm","CMU Ø4.0x15mm","CMU Ø4.0x18mm","CMU Ø4.0x20mm","CMU Ø4.5x6mm","CMU Ø4.5x8mm","CMU Ø4.5x10mm","CMU Ø4.5x11.5mm","CMU Ø4.5x13mm","CMU Ø4.5x15mm","CMU Ø4.5x18mm","CMU Ø4.5x20mm","CMU Ø5.0x6mm","CMU Ø5.0x8mm","CMU Ø5.0x10mm","CMU Ø5.0x11.5mm","CMU Ø5.0x13mm","CMU Ø5.5x6mm","CMU Ø5.5x8mm","CMU Ø5.5x10mm","CMU Ø5.5x11.5mm","CMU Ø5.5x13mm"],"SISTEMA CMU (C3)": ["CMU Ø3.0x6mm C3","CMU Ø3.0x8mm C3","CMU Ø3.0x10mm C3","CMU Ø3.0x11.5mm C3","CMU Ø3.0x13mm C3","CMU Ø3.0x15mm C3","CMU Ø3.0x18mm C3","CMU Ø3.0x20mm C3","CMU Ø3.5x6mm C3","CMU Ø3.5x8mm C3","CMU Ø3.5x10mm C3","CMU Ø3.5x11.5mm C3","CMU Ø3.5x13mm C3","CMU Ø3.5x15mm C3","CMU Ø3.5x18mm C3","CMU Ø3.5x20mm C3","CMU Ø4.0x6mm C3","CMU Ø4.0x8mm C3","CMU Ø4.0x10mm C3","CMU Ø4.0x11.5mm C3","CMU Ø4.0x13mm C3","CMU Ø4.0x15mm C3","CMU Ø4.0x18mm C3","CMU Ø4.0x20mm C3","CMU Ø4.5x6mm C3","CMU Ø4.5x8mm C3","CMU Ø4.5x10mm C3","CMU Ø4.5x11.5mm C3","CMU Ø4.5x13mm C3","CMU Ø4.5x15mm C3","CMU Ø4.5x18mm C3","CMU Ø4.5x20mm C3","CMU Ø5.0x6mm C3","CMU Ø5.0x8mm C3","CMU Ø5.0x10mm C3","CMU Ø5.0x11.5mm C3","CMU Ø5.0x13mm C3","CMU Ø5.5x6mm C3","CMU Ø5.5x8mm C3","CMU Ø5.5x10mm C3","CMU Ø5.5x11.5mm C3","CMU Ø5.5x13mm C3"]},
-                hi: { "HEX INTERNO": ["HI Ø3.30x6.5mm","HI Ø3.30x8.0mm","HI Ø3.30x10mm","HI Ø3.30x11.5mm","HI Ø3.30x13mm","HI Ø3.30x16mm","HI Ø3.75x6.5mm","HI Ø3.75x8.0mm","HI Ø3.75x10mm","HI Ø3.75x11.5mm","HI Ø3.75x13mm","HI Ø3.75x16mm","HI Ø4.2x6.5mm","HI Ø4.2x8.0mm","HI Ø4.2x10mm","HI Ø4.2x11.5mm","HI Ø4.2x13mm","HI Ø4.2x16mm","HI Ø5.0x6.5mm","HI Ø5.0x8.0mm","HI Ø5.0x10mm","HI Ø5.0x11.5mm","HI Ø5.0x13mm","HI Ø5.0x16mm"]},
-                he: { "HE Ø3.30 (Plat. 3.4)": ["HE Ø3.30x8.5mm","HE Ø3.30x10mm","HE Ø3.30x11.5mm","HE Ø3.30x13mm","HE Ø3.30x15mm"],"HE Ø3.75 (Plat. 4.1)": ["HE Ø3.75x8mm","HE Ø3.75x10mm","HE Ø3.75x11.5mm","HE Ø3.75x13mm","HE Ø3.75x15mm"],"HE Ø4.0 (Plat. 4.1)": ["HE Ø4.0x6mm","HE Ø4.0x8.5mm","HE Ø4.0x10mm","HE Ø4.0x11.5mm","HE Ø4.0x13mm","HE Ø4.0x15mm"],"HE Ø5.0 (Plat. 5.0)": ["HE Ø5.0x6mm","HE Ø5.0x8.5mm","HE Ø5.0x10mm","HE Ø5.0x11.5mm","HE Ø5.0x13mm","HE Ø5.0x15mm"]},
-                cmhi: { "CONO MORSE": ["CMHI Ø3.30x8mm","CMHI Ø3.30x10mm","CMHI Ø3.30x11.5mm","CMHI Ø3.30x13mm","CMHI Ø3.30x16mm","CMHI Ø3.75x8mm","CMHI Ø3.75x10mm","CMHI Ø3.75x11.5mm","CMHI Ø3.75x13mm","CMHI Ø3.75x16mm","CMHI Ø4.20x8mm","CMHI Ø4.20x10mm","CMHI Ø4.20x11.5mm","CMHI Ø4.20x13mm","CMHI Ø4.20x16mm","CMHI Ø5.0x8mm","CMHI Ø5.0x10mm","CMHI Ø5.0x11.5mm","CMHI Ø5.0x13mm","CMHI Ø5.0x16mm"]},
-                mu: {
-                    "PILARES MU": ["Minipilar Altura 0,8 - Cono Morse","Minipilar Altura 1,5 - Cono Morse","Minipilar Altura 2,5 - Cono Morse","Minipilar Altura 3,5 - Cono Morse","Minipilar Altura 4,5 - Cono Morse","Minipilar Altura 1 - Hexágono Interno","Minipilar Altura 2 - Hexágono Interno","Minipilar Altura 3 - Hexágono Interno","Minipilar Altura 4 - Hexágono Interno","Minipilar Altura 1 - Hexágono Externo","Minipilar Altura 2 - Hexágono Externo","Minipilar Altura 3 - Hexágono Externo","Minipilar Altura 4 - Hexágono Externo"]
-                }
+                monopieza: { 
+                    "MP Ø3.0": ["MP Ø3.0x6mm","MP Ø3.0x8mm","MP Ø3.0x10mm","MP Ø3.0x11.5mm","MP Ø3.0x13mm","MP Ø3.0x15mm","MP Ø3.0x18mm","MP Ø3.0x20mm"],
+                    "MP Ø3.5": ["MP Ø3.5x6mm","MP Ø3.5x8mm","MP Ø3.5x10mm","MP Ø3.5x11.5mm","MP Ø3.5x13mm","MP Ø3.5x15mm","MP Ø3.5x18mm","MP Ø3.5x20mm"],
+                    "MP Ø4.0": ["MP Ø4.0x6mm","MP Ø4.0x8mm","MP Ø4.0x10mm","MP Ø4.0x11.5mm","MP Ø4.0x13mm","MP Ø4.0x15mm","MP Ø4.0x18mm","MP Ø4.0x20mm"],
+                    "MP Ø4.5": ["MP Ø4.5x6mm","MP Ø4.5x8mm","MP Ø4.5x10mm","MP Ø4.5x11.5mm","MP Ø4.5x13mm","MP Ø4.5x15mm","MP Ø4.5x18mm","MP Ø4.5x20mm"],
+                    "MP Ø5.0": ["MP Ø5.0x6mm","MP Ø5.0x8mm","MP Ø5.0x10mm","MP Ø5.0x11.5mm","MP Ø5.0x13mm"],
+                    "MP Ø5.5": ["MP Ø5.5x6mm","MP Ø5.5x8mm","MP Ø5.5x10mm","MP Ø5.5x11.5mm","MP Ø5.5x13mm"]
+                },
+                basales: { 
+                    "IB - PULIDO": ["IB Ø3.5x10mm","IB Ø3.5x12mm","IB Ø3.5x14mm","IB Ø3.5x15mm","IB Ø3.5x18mm","IB Ø3.5x21mm","IB Ø3.5x23mm","IB Ø3.5x26mm","IB Ø3.5x28mm","IB Ø3.5x24 C14","IB Ø3.5x26 C16","IB Ø3.5x28 C18","IB Ø4.5x10mm","IB Ø4.5x12mm","IB Ø4.5x15mm","IB Ø4.5x18mm","IB Ø4.5x21mm","IB Ø4.5x23mm","IB Ø4.5x26mm","IB Ø4.5x28mm","IB Ø4.5x24 C14","IB Ø4.5x26 C16","IB Ø4.5x28 C18","IB Ø5.5x9mm","IB Ø5.5x10mm","IB Ø5.5x12mm","IB Ø5.5x15mm","IB Ø5.5x18mm","IB Ø6.5x9mm","IB Ø6.5x10mm","IB Ø6.5x12mm","IB Ø6.5x15mm","IB Ø8.5x9mm","IB Ø8.5x10mm","IB Ø8.5x12mm","IB Ø8.5x15mm"],
+                    "IBT - TRATAMIENTO": ["IBT Ø3.5x10mm","IBT Ø3.5x12mm","IBT Ø3.5x14mm","IBT Ø3.5x15mm","IBT Ø3.5x18mm","IBT Ø3.5x21mm","IBT Ø3.5x23mm","IBT Ø3.5x26mm","IBT Ø3.5x28mm","IBT Ø3.5x24 C14","IBT Ø3.5x26 C16","IBT Ø3.5x28 C18","IBT Ø4.5x10mm","IBT Ø4.5x12mm","IBT Ø4.5x15mm","IBT Ø4.5x18mm","IBT Ø4.5x21mm","IBT Ø4.5x23mm","IBT Ø4.5x26mm","IBT Ø4.5x28mm","IBT Ø4.5x24 C14","IBT Ø4.5x26 C16","IBT Ø4.5x28 C18","IBT Ø5.5x9mm","IBT Ø5.5x10mm","IBT Ø5.5x12mm","IBT Ø5.5x15mm","IBT Ø5.5x18mm","IBT Ø6.5x9mm","IBT Ø6.5x10mm","IBT Ø6.5x12mm","IBT Ø6.5x15mm","IBT Ø8.5x9mm","IBT Ø8.5x10mm","IBT Ø8.5x12mm","IBT Ø8.5x15mm"]
+                },
+                compresivos: { 
+                    "SISTEMA CMU (ESTÁNDAR)": ["CMU Ø3.0x6mm","CMU Ø3.0x8mm","CMU Ø3.0x10mm","CMU Ø3.0x11.5mm","CMU Ø3.0x13mm","CMU Ø3.0x15mm","CMU Ø3.0x18mm","CMU Ø3.0x20mm","CMU Ø3.5x6mm","CMU Ø3.5x8mm","CMU Ø3.5x10mm","CMU Ø3.5x11.5mm","CMU Ø3.5x13mm","CMU Ø3.5x15mm","CMU Ø3.5x18mm","CMU Ø3.5x20mm","CMU Ø4.0x6mm","CMU Ø4.0x8mm","CMU Ø4.0x10mm","CMU Ø4.0x11.5mm","CMU Ø4.0x13mm","CMU Ø4.0x15mm","CMU Ø4.0x18mm","CMU Ø4.0x20mm","CMU Ø4.5x6mm","CMU Ø4.5x8mm","CMU Ø4.5x10mm","CMU Ø4.5x11.5mm","CMU Ø4.5x13mm","CMU Ø4.5x15mm","CMU Ø4.5x18mm","CMU Ø4.5x20mm","CMU Ø5.0x6mm","CMU Ø5.0x8mm","CMU Ø5.0x10mm","CMU Ø5.0x11.5mm","CMU Ø5.0x13mm","CMU Ø5.5x6mm","CMU Ø5.5x8mm","CMU Ø5.5x10mm","CMU Ø5.5x11.5mm","CMU Ø5.5x13mm"],
+                    "SISTEMA CMU (C3)": ["CMU Ø3.0x6mm C3","CMU Ø3.0x8mm C3","CMU Ø3.0x10mm C3","CMU Ø3.0x11.5mm C3","CMU Ø3.0x13mm C3","CMU Ø3.0x15mm C3","CMU Ø3.0x18mm C3","CMU Ø3.0x20mm C3","CMU Ø3.5x6mm C3","CMU Ø3.5x8mm C3","CMU Ø3.5x10mm C3","CMU Ø3.5x11.5mm C3","CMU Ø3.5x13mm C3","CMU Ø3.5x15mm C3","CMU Ø3.5x18mm C3","CMU Ø3.5x20mm C3","CMU Ø4.0x6mm C3","CMU Ø4.0x8mm C3","CMU Ø4.0x10mm C3","CMU Ø4.0x11.5mm C3","CMU Ø4.0x13mm C3","CMU Ø4.0x15mm C3","CMU Ø4.0x18mm C3","CMU Ø4.0x20mm C3","CMU Ø4.5x6mm C3","CMU Ø4.5x8mm C3","CMU Ø4.5x10mm C3","CMU Ø4.5x11.5mm C3","CMU Ø4.5x13mm C3","CMU Ø4.5x15mm C3","CMU Ø4.5x18mm C3","CMU Ø4.5x20mm C3","CMU Ø5.0x6mm C3","CMU Ø5.0x8mm C3","CMU Ø5.0x10mm C3","CMU Ø5.0x11.5mm C3","CMU Ø5.0x13mm C3","CMU Ø5.5x6mm C3","CMU Ø5.5x8mm C3","CMU Ø5.5x10mm C3","CMU Ø5.5x11.5mm C3","CMU Ø5.5x13mm C3"]
+                },
+                hi: { "HEX INTERNO": ["HI Ø3.30x6.5mm","HI Ø3.30x8.0mm","HI Ø3.30x10mm","HI Ø3.30x11.5mm","HI Ø3.30x13mm","HI Ø3.30x16mm","HI Ø3.75x6.5mm","HI Ø3.75x8.0mm","HI Ø3.75x10mm","HI Ø3.75x11.5mm","HI Ø3.75x13mm","HI Ø3.75x16mm","HI Ø4.2x6.5mm","HI Ø4.2x8.0mm","HI Ø4.2x10mm","HI Ø4.2x11.5mm","HI Ø4.2x13mm","HI Ø4.2x16mm","HI Ø5.0x6.5mm","HI Ø5.0x8.0mm","HI Ø5.0x10mm","HI Ø5.0x11.5mm","HI Ø5.0x13mm","HI Ø5.0x16mm"] },
+                he: { "HE Ø3.30 (Plat. 3.4)": ["HE Ø3.30x8.5mm","HE Ø3.30x10mm","HE Ø3.30x11.5mm","HE Ø3.30x13mm","HE Ø3.30x15mm"],"HE Ø3.75 (Plat. 4.1)": ["HE Ø3.75x8mm","HE Ø3.75x10mm","HE Ø3.75x11.5mm","HE Ø3.75x13mm","HE Ø3.75x15mm"],"HE Ø4.0 (Plat. 4.1)": ["HE Ø4.0x6mm","HE Ø4.0x8.5mm","HE Ø4.0x10mm","HE Ø4.0x11.5mm","HE Ø4.0x13mm","HE Ø4.0x15mm"],"HE Ø5.0 (Plat. 5.0)": ["HE Ø5.0x6mm","HE Ø5.0x8.5mm","HE Ø5.0x10mm","HE Ø5.0x11.5mm","HE Ø5.0x13mm","HE Ø5.0x15mm"] },
+                cmhi: { "CONO MORSE": ["CMHI Ø3.30x8mm","CMHI Ø3.30x10mm","CMHI Ø3.30x11.5mm","CMHI Ø3.30x13mm","CMHI Ø3.30x16mm","CMHI Ø3.75x8mm","CMHI Ø3.75x10mm","CMHI Ø3.75x11.5mm","CMHI Ø3.75x13mm","CMHI Ø3.75x16mm","CMHI Ø4.20x8mm","CMHI Ø4.20x10mm","CMHI Ø4.20x11.5mm","CMHI Ø4.20x13mm","CMHI Ø4.20x16mm","CMHI Ø5.0x8mm","CMHI Ø5.0x10mm","CMHI Ø5.0x11.5mm","CMHI Ø5.0x13mm","CMHI Ø5.0x16mm"] },
+                mu: { "PILARES": ["Minipilar Altura 0,8 - Cono Morse","Minipilar Altura 1,5 - Cono Morse","Minipilar Altura 2,5 - Cono Morse","Minipilar Altura 3,5 - Cono Morse","Minipilar Altura 4,5 - Cono Morse","Minipilar Altura 1 - Hexágono Interno","Minipilar Altura 2 - Hexágono Interno","Minipilar Altura 3 - Hexágono Interno","Minipilar Altura 4 - Hexágono Interno","Minipilar Altura 1 - Hexágono Externo","Minipilar Altura 2 - Hexágono Externo","Minipilar Altura 3 - Hexágono Externo","Minipilar Altura 4 - Hexágono Externo"] }
             },
             analogicos: {
-                mp: { "COMPONENTES": ["UCLA rotacional - MP","Analogo Plastico - MP","Transfer plastico - MP"] },
-                cmu: { "COMPONENTES": ["Cicatrizal 2mm - CMU","Cicatrizal 3mm - CMU","Ball Attach 2mm - CMU","Pilar Recto Hombro 1 - CMU","Tornillo M2 - CMU"]},
-                hi: { "COMPONENTES": ["Cicatrizal 1mm - HI","Cicatrizal 2mm - HI","Ball attach Alt 1 - HI","Pilar recto Alt 1 - HI","Ucla calcinable rot - HI"]},
-                he: { "COMPONENTES": ["Análogo - HE 4.1","Cicatrizal 1 - HE 4.1","Pilar recto 1 - HE 4.1"]},
-                cm: { "COMPONENTES": ["Cicatrizal 3,3 x 1,5 - CM","Cicatrizal 4,5 x 1,5 - CM"]},
-                mu_pro: { "ACCESORIOS MU": ["Pilar Rotacional - MU", "Pilar Anti-rotacional - MU", "Ucla calcinable - MU", "Tapón de cierre - MU", "Transfer cubeta abierta - MU", "Análogo de Minipilar"] }
+                mp: { "COMPONENTES MP": ["UCLA rotacional para Implantes MonoPieza","Analogo Plastico Rotacional de implante Monopieza","Transfer plastico rotacional para implantes Monopieza"] },
+                cmu: { "COMPONENTES": ["Cicatrizal Altura de 2mm - CMU","Cicatrizal Altura de 3mm - CMU","Ball Attach Altura (h)2mm - CMU","Pilar Recto Hombro 1 - CMU","Tornillo M2 para implante CMU"] },
+                hi: { "COMPONENTES": ["Cicatrizal Altura 1mm - HI","Cicatrizal Altura 2mm - HI","Ball attach Altura 1 - HI","Pilar recto Altura 1 - HI","Ucla calcinable rotacional - HI"] },
+                he: { "COMPONENTES": ["Análogo - HE 4.1","Cicatrizal Altura 1 - HE 4.1","Pilar recto Altura 1 - HE 4.1"] },
+                cm: { "COMPONENTES": ["Pilar de Cicatrización CM 3,3 x 1,5","Pilar de Cicatrización CM 4,5 x 1,5"] },
+                mu_pro: { "ACCESORIOS": ["Pilar Rotacional c/microtornillo - MU", "Pilar Anti-rotacional c/microtornillo - MU", "Ucla calcinable rotacional c/microtornillo - MU", "Tapón de cierre plástico c/microtornillo - MU", "Transfer cubeta abierta c/microtornillo - MU", "Análogo de Minipilar"] }
             },
             digital: {
                 cmu: { "COMPONENTES": ["Cuerpo de escaneo y tornillo M2 - CMU", "Ti-Base y tornillo m2 - CMU"] },
                 hi: { "COMPONENTES": ["Análogo digital - HI","Cuerpo de escaneo - HI","Ti Base Anti-Rotacional - HI"] },
                 he: { "COMPONENTES": ["Análogo digital - HE 4.1","Cuerpo de escaneo - HE 4.1","Ti Base Anti-Rotacional - HE 4.1"] },
-                cm: { 
-                    "SISTEMA CM": ["Análogo Digital - CM 3.3", "Cuerpo de Escaneo - CM 3.3", "T-Base 3,3x1x4 CM", "Análogo Digital - CM 4.5", "Cuerpo de Escaneo - CM 4.5", "T-Base 4,5x1x4 CM"]
-                }
+                cm: { "PLATAFORMA 3.3": ["Análogo Digital - CM 3.3", "Cuerpo de Escaneo - CM 3.3", "T-Base 3,3x1x4 CM"], "PLATAFORMA 4.5": ["Análogo Digital - CM 4.5", "Cuerpo de Escaneo - CM 4.5", "T-Base 4,5x1x4 CM"] }
             }
         };
 
         let cart = {}; let stack = ['step-choice']; let clientData = {};
+
         function showSection(id, push = true) {
             document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
@@ -160,14 +160,19 @@
             document.getElementById('btn-volver').classList.toggle('hidden', stack.length <= 1);
             window.scrollTo(0,0);
         }
+
         function goBack() { if(stack.length > 1) { stack.pop(); showSection(stack.pop()); } }
+
         function validateStart(type) {
             const nom = type === 'old' ? document.getElementById('old_nom').value : document.getElementById('new_nom').value;
-            if(!nom) return alert("Ingrese su nombre");
-            clientData = { nombre: nom };
+            const dni = type === 'old' ? document.getElementById('old_dni').value : document.getElementById('new_dni').value;
+            if(!nom || !dni) return alert("Por favor complete los campos obligatorios (*)");
+            clientData = { nombre: nom, dni: dni };
             showSection('step-menu');
         }
+
         function openSub(id) { showSection(id); }
+
         function loadProducts(cat, subcat) {
             showSection('step-lista');
             const container = document.getElementById('step-lista');
@@ -175,14 +180,14 @@
             const data = DB[cat][subcat];
             for (const group in data) {
                 const groupDiv = document.createElement('div');
-                groupDiv.className = "bg-white rounded-[35px] overflow-hidden shadow-sm mb-4 border border-slate-100";
-                let html = `<button onclick="this.parentElement.classList.toggle('accordion-open')" class="w-full flex justify-between items-center p-6 bg-slate-900 text-white font-black text-[11px] uppercase tracking-widest">
+                groupDiv.className = "bg-white rounded-[35px] overflow-hidden shadow-lg mb-4 border border-slate-100";
+                let html = `<button onclick="this.parentElement.classList.toggle('accordion-open')" class="w-full flex justify-between items-center p-7 bg-slate-900 text-white font-black text-[12px] uppercase tracking-widest">
                     <span>${group}</span><span class="text-xl rotate-icon">+</span></button><div class="accordion-content divide-y">`;
                 data[group].forEach(item => {
                     const q = cart[item] || 0;
-                    html += `<div class="flex justify-between items-center p-6"><span class="text-[11px] font-bold text-slate-600 uppercase pr-4">${item}</span>
+                    html += `<div class="flex justify-between items-center p-6"><span class="text-[11px] font-bold text-slate-600 uppercase pr-4 leading-tight">${item}</span>
                         <div class="flex items-center gap-3 bg-slate-50 p-1 rounded-2xl">
-                            <button onclick="update('${item}',-1,this)" class="w-10 h-10 bg-white rounded-xl shadow-sm font-bold text-slate-400">-</button>
+                            <button onclick="update('${item}',-1,this)" class="w-10 h-10 bg-white rounded-xl shadow-sm font-bold">-</button>
                             <span class="font-black text-sm w-4 text-center">${q}</span>
                             <button onclick="update('${item}',1,this)" class="w-10 h-10 bg-slate-900 text-white rounded-xl shadow-md font-bold">+</button>
                         </div></div>`;
@@ -191,23 +196,33 @@
                 container.appendChild(groupDiv);
             }
         }
+
         function update(item, delta, btn) {
             cart[item] = (cart[item] || 0) + delta;
             if(cart[item] <= 0) delete cart[item];
             btn.parentElement.querySelector('span').innerText = cart[item] || 0;
             document.getElementById('cart-count').innerText = Object.values(cart).reduce((a,b)=>a+b, 0);
         }
+
         function goToResumen() {
             showSection('step-resumen');
             const container = document.getElementById('step-resumen');
-            container.innerHTML = `<h2 class="font-black uppercase text-center text-xl mb-6">Tu Pedido</h2><div class="bg-blue-600 text-white p-6 rounded-[30px] mb-4 font-bold text-sm">Profesional: ${clientData.nombre}</div>`;
+            container.innerHTML = `<h2 class="font-black uppercase text-center text-xl mb-6">Resumen del Pedido</h2>
+                <div class="bg-blue-600 text-white p-7 rounded-[30px] mb-6 font-bold text-sm shadow-xl">
+                    <p>PROFESIONAL: ${clientData.nombre}</p>
+                    <p class="text-[10px] opacity-80 mt-1">DNI: ${clientData.dni}</p>
+                </div>`;
             Object.entries(cart).forEach(([n, q]) => {
-                container.innerHTML += `<div class="p-6 bg-white rounded-[30px] mb-2 flex justify-between items-center border border-slate-100 shadow-sm"><span class="text-xs font-bold uppercase">${n}</span><b class="text-blue-600">x${q}</b></div>`;
+                container.innerHTML += `<div class="p-6 bg-white rounded-[25px] mb-2 flex justify-between items-center border border-slate-100 shadow-sm">
+                    <span class="text-[11px] font-bold uppercase">${n}</span>
+                    <b class="text-blue-600 text-lg">x${q}</b>
+                </div>`;
             });
-            container.innerHTML += `<button onclick="sendWA()" class="w-full bg-green-500 text-white py-7 rounded-[35px] mt-6 font-black uppercase shadow-lg shadow-green-200">Enviar por WhatsApp</button>`;
+            container.innerHTML += `<button onclick="sendWA()" class="w-full bg-green-500 text-white py-8 rounded-[35px] mt-8 font-black uppercase shadow-2xl">Enviar Pedido vía WhatsApp</button>`;
         }
+
         function sendWA() {
-            let m = `*PEDIDO BIO-FIX®*\n*DR/A:* ${clientData.nombre}\n\n`;
+            let m = `*PEDIDO BIO-FIX®*\n*DR/A:* ${clientData.nombre}\n*DNI:* ${clientData.dni}\n\n`;
             Object.entries(cart).forEach(([n,q])=> m+=`✅ ${q} x ${n}\n`);
             window.open(`https://wa.me/5491122334455?text=${encodeURIComponent(m)}`);
         }
